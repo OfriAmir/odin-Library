@@ -19,6 +19,7 @@ function displayBooks(arr){
     let currentBookRef
     let body = document.querySelector("body")
     let booksContainer = document.createElement("div")
+    booksContainer.classList.toggle("books-container")
     body.appendChild(booksContainer)
     for (let i = 0; i < arr.length; i++){
         refArr[i] = {
