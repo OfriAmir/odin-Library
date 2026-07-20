@@ -1,4 +1,10 @@
 let myLibrary = []
+let newBook = false
+let body = document.querySelector("body")
+let booksContainer = document.createElement("div")
+booksContainer.classList.toggle("books-container")
+body.appendChild(booksContainer)
+let bookCardsDisplayed = 0
 
 function Book(title, author, numberOfPages, readAlready){
     if (!new.target) {
@@ -18,12 +24,29 @@ function addBookToLibrary(title, author, numberOfPages, readAlready){
 }
 
 function displayBooks(arr){
+    //When adding or removing a card, displayBooks will be called, removing all cards and creating new display that will suit the altered library.
+    if (bookCardsDisplayed > 0){
+        let allCards = document.querySelectorAll(".book-card")
+        allCards.forEach(item => {
+            booksContainer.removeChild(item)
+        })
+        bookCardsDisplayed = 0
+    }
+    
     let currentBookRef
-    let body = document.querySelector("body")
-    let booksContainer = document.createElement("div")
-    booksContainer.classList.toggle("books-container")
-    body.appendChild(booksContainer)
+
+    // if (arr.length > 1){
+    //     console.log(arr.length)
+    //     let i = arr.length - 1
+    // } else {
+    //     console.log("hekk")
+    //     let i = 0
+    // }
     for (let i = 0; i < arr.length; i++){
+        // if (newBook){
+        //     i = arr.length - 1
+        //     newBook = false
+        // }
         myLibrary[i].ref = document.createElement("div")
         currentBookRef = myLibrary[i].ref
         currentBookRef.classList.toggle("book-card")
@@ -60,6 +83,7 @@ function displayBooks(arr){
                 else bookInfo.textContent = `Not Finished`
                 infoList.appendChild(bookInfo)
             }
+            bookCardsDisplayed ++
 
             // else if (key == "author"){
             //     bookInfo.textContent = `${myLibrary[i][key]}`
@@ -103,14 +127,33 @@ displayBooks(myLibrary)
 let newBtn = document.createElement("button")
 newBtn.textContent = "New"
 newBtn.classList.toggle("new-button")
-let body = document.querySelector("body")
 body.appendChild(newBtn)
 
+const dialog = document.querySelector(".form-dialog")
+const cancelBtn = document.querySelector(".cancel-btn")
+const addBtn = document.querySelector(".add-btn")
+const titleInput = document.querySelector(".title-input")
+const authorInput = document.querySelector(".author-input") 
+const pagesInput = document.querySelector(".pages-input") 
+const readInput = document.querySelector(".read-input")
+newBtn.addEventListener('click', () => {
+    dialog.showModal()
+})
+cancelBtn.addEventListener('click', () => {
+    dialog.close()
+})
+addBtn.addEventListener('click', () => {
+    addNewBook()
+    dialog.close()
+})
 function addNewBook () {
-    let dialog = document.createElement("dialog")
-    body.appendChild(dialog)
-    let form = document.createElement("form")
-    form.setAttribute("action", "#")
-    form.setAttribute("method", "get")
-    //You will have to manually create labels and inputs elements, and use input type of "radio" for the user to choose - if the book was read or not.
+    let title = titleInput.value
+    let author = authorInput.value
+    let pages = pagesInput.value
+    let read = readInput.value
+    addBookToLibrary(title, author, pages, read)
+    // newBook = true
+    displayBooks(myLibrary)
 }
+
+function removeBook ()

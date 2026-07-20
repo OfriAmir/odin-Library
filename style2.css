@@ -45,3 +45,11 @@
         p{
             overflow:hidden;
         }
+
+        .form-dialog {
+            margin: auto auto;
+        }
+
+        .form-dialog * {
+            display: block;
+        }
