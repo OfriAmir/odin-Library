@@ -36,6 +36,19 @@ function Book(title, author, numberOfPages, readAlready){
 
 Book.prototype.removeBook = function() {
     domRefObj.booksContainer.removeChild(this.ref)
+    const bookIndex = myLibrary.indexOf(this)
+    myLibrary.splice(bookIndex, 1) //instead of removing the book card from the DOM, remove it from the library and refresh the display using display books.
+    //Maybe remove from library and from DOM without using displayBooks again as it might be too cumbersome in bigger scales (displayBooks removes all book cards from UI and creates them again)
+}
+Book.prototype.toggleReadAlready = function() {
+    this.readAlready = false
+    const readAlreadyLi = document.querySelector(`[data-id = "${this.id}"] .read-already`)
+    console.log(readAlreadyLi)
+    if (readAlreadyLi.textContent == "Finished"){
+        readAlreadyLi.textContent = "Not finished"
+    } else {
+        readAlreadyLi.textContent = "Finished"
+    }
 }
 function addBookToLibrary(title, author, numberOfPages, readAlready){
     let book = new Book(title, author, numberOfPages, readAlready)
@@ -55,52 +68,65 @@ function displayBooks(arr){
     
     let currentBookRef
     let removeBtnArray = []
+    let finishBtnArray = []
     for (let i = 0; i < arr.length; i++){
         myLibrary[i].ref = document.createElement("div")
         currentBookRef = myLibrary[i].ref
         currentBookRef.classList.toggle("book-card")
         currentBookRef.dataset.id = myLibrary[i].id // set a "data-id" attribute that will equal the special id set on the Book constructor with "crypto.randomUUID()".
         domRefObj.booksContainer.appendChild(currentBookRef)
-        let isFirstIteration = true
         let infoList
         for (let key in myLibrary[i]){
             let bookInfo
             if (key == "title"){
                 bookInfo = document.createElement("h2")
+                bookInfo.classList.toggle(key)
                 currentBookRef.appendChild(bookInfo)
                 bookInfo.textContent = `${myLibrary[i][key]}`
             }
             if (key == "author"){
                 bookInfo = document.createElement("h3")
+                bookInfo.classList.toggle(key)
                 currentBookRef.appendChild(bookInfo)
                 bookInfo.textContent = `${myLibrary[i][key]}` 
             }
             if (key == "numberOfPages") {
                 infoList = document.createElement("ul")   
                 currentBookRef.appendChild(infoList)
-                isFirstIteration = false
-            }
-            if (key == "numberOfPages"){ 
                 bookInfo = document.createElement("li")
+                bookInfo.classList.toggle("number-of-pages")
                 bookInfo.textContent = `Pages: ${myLibrary[i][key]}`
-                infoList.appendChild(bookInfo)
+                infoList.appendChild(bookInfo)                
             }
             if (key == "readAlready"){
                 bookInfo = document.createElement("li")
+                bookInfo.classList.toggle("read-already")
                 if (myLibrary[i][key]) bookInfo.textContent = `Finished`
                 else bookInfo.textContent = `Not Finished`
                 infoList.appendChild(bookInfo)
             }
         }
+        //add remove button
         let removeBtn = document.createElement("button")
         removeBtnArray.push(removeBtn)
         removeBtn.setAttribute("type", "button")
         removeBtn.classList.toggle("remove-btn")
         removeBtn.textContent = "remove"
         currentBookRef.appendChild(removeBtn)
+
+        //add read-unread button
+        let finishBtn = document.createElement("button")
+        finishBtnArray.push(finishBtn)
+        finishBtn.setAttribute("type", "button")
+        finishBtn.classList.toggle("finish-btn")
+        if (myLibrary[i].readAlready) finishBtn.textContent = "Mark unFinished"
+        else finishBtn.textContent = "Mark Finished"
+        currentBookRef.appendChild(finishBtn)
+
         bookCardsDisplayed ++
     }
     domRefObj.removeBtns = removeBtnArray
+    domRefObj.finishBtns = finishBtnArray
 }
 
 
@@ -116,7 +142,7 @@ addBookToLibrary("h","hfa afafa fafafaaf aafafa fafaafafaaf aafaf aa","h","h")
 //You stopped at creating objects for DOM elements and event listeners in 260727. Please continue from that.
 displayBooks(myLibrary)
 
-
+//Add book card functinality
 domRefObj.newBtn.addEventListener('click', () => {
     domRefObj.dialog.showModal()
 })
@@ -140,12 +166,20 @@ function addNewBook () {
     displayBooks(myLibrary)
 }
 
-for (let item of domRefObj.removeBtns){
-    console.log(item.parentElement.dataset.id)
-    item.addEventListener("click", (e) => {
-        let parentId = item.parentElement.dataset.id
-        let bookObjToRemove = myLibrary.filter()
+
+for (let i = 0; i < domRefObj.removeBtns.length; i++){
+    let parentId = domRefObj.removeBtns[i].parentElement.dataset.id
+    let bookObjToManipulate = myLibrary.find(obj => obj.id == parentId)
+    domRefObj.removeBtns[i].addEventListener("click", () => {
+        bookObjToManipulate.removeBook()
+    })
+    domRefObj.finishBtns[i].addEventListener("click", () => {
+        bookObjToManipulate.toggleReadAlready()
+        if (domRefObj.finishBtns[i].textContent == "Mark Finished"){
+            domRefObj.finishBtns[i].textContent = "Mark Unfinished"
+        } else {
+            domRefObj.finishBtns[i].textContent = "Mark Finished"
+        }
     })
 }
-// function removeBook ()
 
