@@ -1,11 +1,28 @@
 let myLibrary = []
-let newBook = false
-let body = document.querySelector("body")
-let booksContainer = document.createElement("div")
-booksContainer.classList.toggle("books-container")
-body.appendChild(booksContainer)
 let bookCardsDisplayed = 0
+let domRefObj = {
+    dialog : document.querySelector(".form-dialog"),
+    cancelBtn : document.querySelector(".cancel-btn"),
+    addBtn : document.querySelector(".add-btn"),
+    titleInput : document.querySelector(".title-input"),
+    authorInput : document.querySelector(".author-input"), 
+    pagesInput : document.querySelector(".pages-input"),
+    readInput : document.querySelector(".read-input"),
+    body : document.querySelector("body"),
+}
 
+function addElementToDOM(refName,elementType,className,parentRef) {
+    domRefObj[refName] = document.createElement(elementType);
+    if (className) domRefObj[refName].classList.toggle(className);
+    parentRef.appendChild(domRefObj[refName]);
+}
+
+addElementToDOM("booksContainer","div","books-container",domRefObj.body)
+addElementToDOM("newBtn", "button", "new-button", domRefObj.body)
+domRefObj.newBtn.textContent = "New"
+
+
+//Object constructor which is called to create an object for any book in the library.
 function Book(title, author, numberOfPages, readAlready){
     if (!new.target) {
         throw Error("You must use the 'new' operator to call the constructor");
@@ -25,38 +42,25 @@ function addBookToLibrary(title, author, numberOfPages, readAlready){
 
 function displayBooks(arr){
     //When adding or removing a card, displayBooks will be called, removing all cards and creating new display that will suit the altered library.
-    if (bookCardsDisplayed > 0){
+    if (bookCardsDisplayed > 0){ //increments in 1 for every book displayed in the webpage.
         let allCards = document.querySelectorAll(".book-card")
         allCards.forEach(item => {
-            booksContainer.removeChild(item)
+            domRefObj.booksContainer.removeChild(item)
         })
         bookCardsDisplayed = 0
     }
     
     let currentBookRef
 
-    // if (arr.length > 1){
-    //     console.log(arr.length)
-    //     let i = arr.length - 1
-    // } else {
-    //     console.log("hekk")
-    //     let i = 0
-    // }
     for (let i = 0; i < arr.length; i++){
-        // if (newBook){
-        //     i = arr.length - 1
-        //     newBook = false
-        // }
         myLibrary[i].ref = document.createElement("div")
         currentBookRef = myLibrary[i].ref
         currentBookRef.classList.toggle("book-card")
-        booksContainer.appendChild(currentBookRef)
-        // let infoList = document.createElement("ul")
+        domRefObj.booksContainer.appendChild(currentBookRef)
         let isFirstIteration = true
         let infoList
         for (let key in myLibrary[i]){
             let bookInfo
-            // let bookInfo = document.createElement("li")
             if (key == "title"){
                 bookInfo = document.createElement("h2")
                 currentBookRef.appendChild(bookInfo)
@@ -84,30 +88,7 @@ function displayBooks(arr){
                 infoList.appendChild(bookInfo)
             }
             bookCardsDisplayed ++
-
-            // else if (key == "author"){
-            //     bookInfo.textContent = `${myLibrary[i][key]}`
-            // } else if (key == "numberOfPages"){
-            //      bookInfo.textContent = `Pages: ${myLibrary[i][key]}`
-            // } else if (key == "readAlready"){
-            //     if (myLibrary[i][key]) bookInfo.textContent = `Finished`
-            //     else bookInfo.textContent = `Not Finished`
-            // }
-            
-            // if (!document.querySelector("ul")) currentBookRef.appendChild(infoList)
-            // if (key == "id" || key == "ref") continue
-            
-            // infoList.appendChild(bookInfo)
-            // if (key == "author"){
-            //     bookInfo.textContent = `${myLibrary[i][key]}`
-            // } else if (key = numberOfPages) {
-            //    bookInfo.textContent = `Pages:${myLibrary[i][key]}` 
-            // }
-            
         }
-        // let removeButton = document.createElement("button")
-        // removeButton.classList.toggle("remove-btn")
-        // removeButton.textContent = "Remove"
     }
 }
 
@@ -121,39 +102,31 @@ addBookToLibrary("h","hfa afafa fafafaaf aafafa fafaafafaaf aafaf aa","h","h")
 addBookToLibrary("h","hfa afafa fafafaaf aafafa fafaafafaaf aafaf aa","h","h")
 addBookToLibrary("h","hfa afafa fafafaaf aafafa fafaafafaaf aafaf aa","h","h")
 
-
+//You stopped at creating objects for DOM elements and event listeners in 260727. Please continue from that.
 displayBooks(myLibrary)
 
-let newBtn = document.createElement("button")
-newBtn.textContent = "New"
-newBtn.classList.toggle("new-button")
-body.appendChild(newBtn)
 
-const dialog = document.querySelector(".form-dialog")
-const cancelBtn = document.querySelector(".cancel-btn")
-const addBtn = document.querySelector(".add-btn")
-const titleInput = document.querySelector(".title-input")
-const authorInput = document.querySelector(".author-input") 
-const pagesInput = document.querySelector(".pages-input") 
-const readInput = document.querySelector(".read-input")
-newBtn.addEventListener('click', () => {
-    dialog.showModal()
+domRefObj.newBtn.addEventListener('click', () => {
+    domRefObj.dialog.showModal()
 })
-cancelBtn.addEventListener('click', () => {
-    dialog.close()
+domRefObj.cancelBtn.addEventListener('click', () => {
+    domRefObj.dialog.close()
 })
-addBtn.addEventListener('click', () => {
+domRefObj.addBtn.addEventListener('click', (e) => {
     addNewBook()
-    dialog.close()
+    domRefObj.dialog.close()
 })
 function addNewBook () {
-    let title = titleInput.value
-    let author = authorInput.value
-    let pages = pagesInput.value
-    let read = readInput.value
+    let title = domRefObj.titleInput.value
+    let author = domRefObj.authorInput.value
+    let pages = domRefObj.pagesInput.value
+    let read = domRefObj.readInput.value
     addBookToLibrary(title, author, pages, read)
-    // newBook = true
+    domRefObj.titleInput.value = ""
+    domRefObj.authorInput.value = ""
+    domRefObj.pagesInput.value = ""
+    domRefObj.readInput.checked = false
     displayBooks(myLibrary)
 }
 
-function removeBook ()
+// function removeBook ()
