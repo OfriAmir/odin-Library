@@ -34,6 +34,9 @@ function Book(title, author, numberOfPages, readAlready){
     this.id = crypto.randomUUID();
 }
 
+Book.prototype.removeBook = function() {
+    domRefObj.booksContainer.removeChild(this.ref)
+}
 function addBookToLibrary(title, author, numberOfPages, readAlready){
     let book = new Book(title, author, numberOfPages, readAlready)
     myLibrary.push(book)
@@ -51,11 +54,12 @@ function displayBooks(arr){
     }
     
     let currentBookRef
-
+    let removeBtnArray = []
     for (let i = 0; i < arr.length; i++){
         myLibrary[i].ref = document.createElement("div")
         currentBookRef = myLibrary[i].ref
         currentBookRef.classList.toggle("book-card")
+        currentBookRef.dataset.id = myLibrary[i].id // set a "data-id" attribute that will equal the special id set on the Book constructor with "crypto.randomUUID()".
         domRefObj.booksContainer.appendChild(currentBookRef)
         let isFirstIteration = true
         let infoList
@@ -87,9 +91,16 @@ function displayBooks(arr){
                 else bookInfo.textContent = `Not Finished`
                 infoList.appendChild(bookInfo)
             }
-            bookCardsDisplayed ++
         }
+        let removeBtn = document.createElement("button")
+        removeBtnArray.push(removeBtn)
+        removeBtn.setAttribute("type", "button")
+        removeBtn.classList.toggle("remove-btn")
+        removeBtn.textContent = "remove"
+        currentBookRef.appendChild(removeBtn)
+        bookCardsDisplayed ++
     }
+    domRefObj.removeBtns = removeBtnArray
 }
 
 
@@ -129,4 +140,12 @@ function addNewBook () {
     displayBooks(myLibrary)
 }
 
+for (let item of domRefObj.removeBtns){
+    console.log(item.parentElement.dataset.id)
+    item.addEventListener("click", (e) => {
+        let parentId = item.parentElement.dataset.id
+        let bookObjToRemove = myLibrary.filter()
+    })
+}
 // function removeBook ()
+
