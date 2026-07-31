@@ -57,7 +57,7 @@ function addBookToLibrary(title, author, numberOfPages, readAlready){
 }
 
 function displayBooks(arr){
-    //When adding or removing a card, displayBooks will be called, removing all cards and creating new display that will suit the altered library.
+    //When adding a card, displayBooks will be called, removing all cards and creating new display that will suit the altered library. That might be a bad practice in bigger scales of webs...
     if (bookCardsDisplayed > 0){ //increments in 1 for every book displayed in the webpage.
         let allCards = document.querySelectorAll(".book-card")
         allCards.forEach(item => {
@@ -130,19 +130,6 @@ function displayBooks(arr){
     addEventListenerstoRemoveAndFinish()
 }
 
-
-
-addBookToLibrary("h","hfa afafa fafafaaf aafafa fafaafafaaf aafaf aa","h","h")
-addBookToLibrary("h","hfa afafa fafafaaf aafafa fafaafafaaf aafaf aa","h","h")
-addBookToLibrary("h","hfa afafa fafafaaf aafafa fafaafafaaf aafaf aa","h","h")
-addBookToLibrary("h","hfa afafa fafafaaf aafafa fafaafafaaf aafaf aa","h","h")
-addBookToLibrary("h","hfa afafa fafafaaf aafafa fafaafafaaf aafaf aa","h","h")
-addBookToLibrary("h","hfa afafa fafafaaf aafafa fafaafafaaf aafaf aa","h","h")
-addBookToLibrary("h","hfa afafa fafafaaf aafafa fafaafafaaf aafaf aa","h","h")
-
-//You stopped at creating objects for DOM elements and event listeners in 260727. Please continue from that.
-displayBooks(myLibrary)
-
 //Add book card functionality
 domRefObj.newBtn.addEventListener('click', () => {
     domRefObj.dialog.showModal()
@@ -159,7 +146,6 @@ function addNewBook () {
     let author = domRefObj.authorInput.value
     let pages = domRefObj.pagesInput.value
     let read = domRefObj.finishInput.checked
-    console.log()
     addBookToLibrary(title, author, pages, read)
     domRefObj.titleInput.value = ""
     domRefObj.authorInput.value = ""
@@ -171,19 +157,32 @@ function addNewBook () {
 
 function addEventListenerstoRemoveAndFinish(){
     for (let i = 0; i < domRefObj.removeBtns.length; i++){
-    let parentId = domRefObj.removeBtns[i].parentElement.dataset.id
-    let bookObjToManipulate = myLibrary.find(obj => obj.id == parentId)
-    domRefObj.removeBtns[i].addEventListener("click", () => {
-        bookObjToManipulate.removeBook()
-    })
-    domRefObj.finishBtns[i].addEventListener("click", () => {
-        bookObjToManipulate.toggleReadAlready()
-        if (domRefObj.finishBtns[i].textContent == "Mark Finished"){
-            domRefObj.finishBtns[i].textContent = "Mark Unfinished"
-        } else {
-            domRefObj.finishBtns[i].textContent = "Mark Finished"
-        }
-    })
+        let parentId = domRefObj.removeBtns[i].parentElement.dataset.id
+        let bookObjToManipulate = myLibrary.find(obj => obj.id == parentId)
+        domRefObj.removeBtns[i].addEventListener("click", () => {
+            bookObjToManipulate.removeBook()
+        })
+        domRefObj.finishBtns[i].addEventListener("click", () => {
+            bookObjToManipulate.toggleReadAlready()
+            if (domRefObj.finishBtns[i].textContent == "Mark Finished"){
+                domRefObj.finishBtns[i].textContent = "Mark Unfinished"
+            } else {
+                domRefObj.finishBtns[i].textContent = "Mark Finished"
+            }
+        })
+    }
 }
-}
+
+addBookToLibrary("h","hfa afafa fafafaaf aafafa fafaafafaaf aafaf aa","h","h")
+addBookToLibrary("h","hfa afafa fafafaaf aafafa fafaafafaaf aafaf aa","h","h")
+addBookToLibrary("h","hfa afafa fafafaaf aafafa fafaafafaaf aafaf aa","h","h")
+addBookToLibrary("h","hfa afafa fafafaaf aafafa fafaafafaaf aafaf aa","h","h")
+addBookToLibrary("h","hfa afafa fafafaaf aafafa fafaafafaaf aafaf aa","h","h")
+addBookToLibrary("h","hfa afafa fafafaaf aafafa fafaafafaaf aafaf aa","h","h")
+addBookToLibrary("h","hfa afafa fafafaaf aafafa fafaafafaaf aafaf aa","h","h")
+
+//You stopped at creating objects for DOM elements and event listeners in 260727. Please continue from that.
+displayBooks(myLibrary)
+
+
 
