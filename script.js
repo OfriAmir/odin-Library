@@ -2,8 +2,8 @@ let myLibrary = []
 let bookCardsDisplayed = 0
 let domRefObj = {
     dialog : document.querySelector(".form-dialog"),
+    newBookForm : document.querySelector(".form-dialog form"),
     cancelBtn : document.querySelector(".cancel-btn"),
-    addBtn : document.querySelector(".add-btn"),
     titleInput : document.querySelector(".title-input"),
     authorInput : document.querySelector(".author-input"), 
     pagesInput : document.querySelector(".pages-input"),
@@ -137,7 +137,8 @@ domRefObj.newBtn.addEventListener('click', () => {
 domRefObj.cancelBtn.addEventListener('click', () => {
     domRefObj.dialog.close()
 })
-domRefObj.addBtn.addEventListener('click', (e) => {
+domRefObj.newBookForm.addEventListener('submit', (e) => {
+    e.preventDefault()
     addNewBook()
     domRefObj.dialog.close()
 })
