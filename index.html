@@ -1,35 +1,31 @@
 <!DOCTYPE html>
-<!-- pseudo code
- Fix styling, with flex-wrap
- 
-
-
-
-
-
--->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library</title>
-    <link rel="stylesheet" href="style2.css">
-    <script type="module" src="script2.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="script.js" defer></script>
 </head>
 <body>
     <h1>My Library</h1>
     <dialog class="form-dialog">
         <form method="get" action="#">
+            <h3>Add a New Book to the Library</h3>
             <label for="title">Title:</label>
             <input type="text" id="title" class="title-input">
             <label for="author">Author:</label>
             <input type="text" id="author" class="author-input">
             <label for="pages">Number of Pages:</label>
             <input type= "number" id="pages" class="pages-input">
-            <label for="read">read</label>
-            <input type="checkbox" id="read" class="read-input">
-            <button type="submit" class="add-btn">Add</button>
-            <button type="button" class="cancel-btn">Cancel</button>
+            <div class="finish-container">
+                <label for="finish">Finished/Unfinished:</label>
+                <input type="checkbox" id="finish" class="finish-input">
+            </div>
+            <div class="dialog-btns-container">
+                <button type="submit" class="add-btn">Add</button>
+                <button type="button" class="cancel-btn">Cancel</button>
+            </div>
         </form>
     </dialog>    
 

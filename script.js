@@ -7,7 +7,7 @@ let domRefObj = {
     titleInput : document.querySelector(".title-input"),
     authorInput : document.querySelector(".author-input"), 
     pagesInput : document.querySelector(".pages-input"),
-    readInput : document.querySelector(".read-input"),
+    finishInput : document.querySelector(".finish-input"),
     body : document.querySelector("body"),
 }
 
@@ -88,7 +88,7 @@ function displayBooks(arr){
                 bookInfo = document.createElement("h3")
                 bookInfo.classList.toggle(key)
                 currentBookRef.appendChild(bookInfo)
-                bookInfo.textContent = `${myLibrary[i][key]}` 
+                bookInfo.textContent = `by ${myLibrary[i][key]}` 
             }
             if (key == "numberOfPages") {
                 infoList = document.createElement("ul")   
@@ -127,6 +127,7 @@ function displayBooks(arr){
     }
     domRefObj.removeBtns = removeBtnArray
     domRefObj.finishBtns = finishBtnArray
+    addEventListenerstoRemoveAndFinish()
 }
 
 
@@ -142,7 +143,7 @@ addBookToLibrary("h","hfa afafa fafafaaf aafafa fafaafafaaf aafaf aa","h","h")
 //You stopped at creating objects for DOM elements and event listeners in 260727. Please continue from that.
 displayBooks(myLibrary)
 
-//Add book card functinality
+//Add book card functionality
 domRefObj.newBtn.addEventListener('click', () => {
     domRefObj.dialog.showModal()
 })
@@ -157,17 +158,19 @@ function addNewBook () {
     let title = domRefObj.titleInput.value
     let author = domRefObj.authorInput.value
     let pages = domRefObj.pagesInput.value
-    let read = domRefObj.readInput.value
+    let read = domRefObj.finishInput.checked
+    console.log()
     addBookToLibrary(title, author, pages, read)
     domRefObj.titleInput.value = ""
     domRefObj.authorInput.value = ""
     domRefObj.pagesInput.value = ""
-    domRefObj.readInput.checked = false
+    domRefObj.finishInput.checked = false
     displayBooks(myLibrary)
+
 }
 
-
-for (let i = 0; i < domRefObj.removeBtns.length; i++){
+function addEventListenerstoRemoveAndFinish(){
+    for (let i = 0; i < domRefObj.removeBtns.length; i++){
     let parentId = domRefObj.removeBtns[i].parentElement.dataset.id
     let bookObjToManipulate = myLibrary.find(obj => obj.id == parentId)
     domRefObj.removeBtns[i].addEventListener("click", () => {
@@ -181,5 +184,6 @@ for (let i = 0; i < domRefObj.removeBtns.length; i++){
             domRefObj.finishBtns[i].textContent = "Mark Finished"
         }
     })
+}
 }
 

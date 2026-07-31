@@ -1,0 +1,121 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('fonts/Roboto-Regular.woff2') format('woff2'),
+        url('fonts/Roboto-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+    color: rgb(202, 199, 199);
+    font-family: system-ui, "Segoe UI", Roboto, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+body{
+    height: 100vh;
+    background-image: linear-gradient(rgb(2, 22, 41), rgb(12, 42, 20));
+
+}
+h1{
+    text-align: center;
+    margin: 50px 0;
+}
+.books-container{
+    margin: 16px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) ;
+    margin: 0 auto;
+    width: 70%;
+    gap: 20px;
+    align-content: flex-start;
+}
+
+.book-card{
+    background-image: linear-gradient(rgb(7, 10, 185),rgb(44, 6, 80));
+    padding: 24px;
+    border-radius: 10px;
+    display: grid;
+    grid-template-rows: min-content 1fr min-content 25px 25px;
+    gap: 16px;
+}
+
+.book-card > h3,
+.book-card > h2{
+    text-align: center;
+}
+.book-card li{
+    list-style-type: none;
+}
+
+p{
+    overflow:hidden;
+}
+
+.form-dialog {
+    margin: auto auto;
+    padding: 24px;
+    background-image: linear-gradient(rgb(88, 6, 6), rgb(109, 6, 6));
+    border: none;
+    box-shadow: 1px 1px 10px rgb(255, 255, 255);
+    border-radius: 10px;
+}
+
+.form-dialog * {
+    display: block;
+    margin-bottom: 8px;
+}
+
+
+button {
+    align-self: center;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+    background-color: turquoise;
+    color: black;
+    font-weight: 700;
+}
+
+button:hover {
+    background-color: rgb(135, 240, 229);
+}
+
+button:active {
+    background-color: rgb(11, 126, 114);;
+}
+
+.new-button{
+    display: block; 
+    margin: 30px auto;
+}
+
+dialog input:not([type="checkbox"]) {
+    font-size: 1rem;
+    border-radius: 10px;
+    background-color: transparent;
+    border: 1px solid black;
+    box-shadow: 1px 1px 3px black
+}
+dialog input:not([type="checkbox"]):focus{
+    border: 1px solid blue;
+    box-shadow: 1px 1px 3px blue;
+    outline: none;
+}
+.finish-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.dialog-btns-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
