@@ -9,8 +9,13 @@ let domRefObj = {
     pagesInput : document.querySelector(".pages-input"),
     finishInput : document.querySelector(".finish-input"),
     body : document.querySelector("body"),
+    //properties that will be set later appear here for readability purposes, with null value.
+    removeBtns: null,
+    finishBtns: null,
+    booksContainer: null,
+    newBtn: null,
 }
-
+console.log(domRefObj.body)
 function addElementToDOM(refName,elementType,className,parentRef) {
     domRefObj[refName] = document.createElement(elementType);
     if (className) domRefObj[refName].classList.toggle(className);
@@ -32,6 +37,7 @@ function Book(title, author, numberOfPages, readAlready){
     this.numberOfPages = numberOfPages;
     this.readAlready = readAlready;
     this.id = crypto.randomUUID();
+    this.ref = null
 }
 
 Book.prototype.removeBook = function() {
@@ -43,7 +49,6 @@ Book.prototype.removeBook = function() {
 Book.prototype.toggleReadAlready = function() {
     this.readAlready = false
     const readAlreadyLi = document.querySelector(`[data-id = "${this.id}"] .read-already`)
-    console.log(readAlreadyLi)
     if (readAlreadyLi.textContent == "Finished"){
         readAlreadyLi.textContent = "Not finished"
     } else {

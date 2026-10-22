@@ -26,13 +26,11 @@ h1{
     margin: 50px 0;
 }
 .books-container{
-    margin: 16px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) ;
     margin: 0 auto;
     width: 70%;
     gap: 20px;
-    align-content: flex-start;
 }
 
 .book-card{
@@ -52,16 +50,13 @@ h1{
     list-style-type: none;
 }
 
-p{
-    overflow:hidden;
-}
 
 .form-dialog {
     margin: auto auto;
     padding: 24px;
     background-image: linear-gradient(rgb(88, 6, 6), rgb(109, 6, 6));
     border: none;
-    box-shadow: 1px 1px 10px rgb(255, 255, 255);
+    box-shadow: 1px 1px 10px rgb(0,0,0);
     border-radius: 10px;
 }
 
