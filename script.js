@@ -27,32 +27,30 @@ addElementToDOM("newBtn", "button", "new-button", domRefObj.body)
 domRefObj.newBtn.textContent = "New"
 
 
-//Object constructor which is called to create an object for any book in the library.
-function Book(title, author, numberOfPages, readAlready){
-    if (!new.target) {
-        throw Error("You must use the 'new' operator to call the constructor");
+//a class which is called to create an object for any book in the library.
+class Book {
+    constructor(title, author, numberOfPages, readAlready){
+        this.title = title;
+        this.author = author;
+        this.numberOfPages = numberOfPages;
+        this.readAlready = readAlready;
+        this.id = crypto.randomUUID();
+        this.ref = null
     }
-    this.title = title;
-    this.author = author;
-    this.numberOfPages = numberOfPages;
-    this.readAlready = readAlready;
-    this.id = crypto.randomUUID();
-    this.ref = null
-}
-
-Book.prototype.removeBook = function() {
-    domRefObj.booksContainer.removeChild(this.ref)
-    const bookIndex = myLibrary.indexOf(this)
-    myLibrary.splice(bookIndex, 1) //instead of removing the book card from the DOM, remove it from the library and refresh the display using display books.
-    //Maybe remove from library and from DOM without using displayBooks again as it might be too cumbersome in bigger scales (displayBooks removes all book cards from UI and creates them again)
-}
-Book.prototype.toggleReadAlready = function() {
-    this.readAlready = false
-    const readAlreadyLi = document.querySelector(`[data-id = "${this.id}"] .read-already`)
-    if (readAlreadyLi.textContent == "Finished"){
-        readAlreadyLi.textContent = "Not finished"
-    } else {
-        readAlreadyLi.textContent = "Finished"
+    removeBook(){
+        domRefObj.booksContainer.removeChild(this.ref)
+        const bookIndex = myLibrary.indexOf(this)
+        myLibrary.splice(bookIndex, 1) //instead of removing the book card from the DOM, remove it from the library and refresh the display using display books.
+        //Maybe remove from library and from DOM without using displayBooks again as it might be too cumbersome in bigger scales (displayBooks removes all book cards from UI and creates them again)        
+    }
+    toggleReadAlready(){
+        this.readAlready = false
+        const readAlreadyLi = document.querySelector(`[data-id = "${this.id}"] .read-already`)
+        if (readAlreadyLi.textContent == "Finished"){
+            readAlreadyLi.textContent = "Not finished"
+        } else {
+            readAlreadyLi.textContent = "Finished"
+        }
     }
 }
 function addBookToLibrary(title, author, numberOfPages, readAlready){
